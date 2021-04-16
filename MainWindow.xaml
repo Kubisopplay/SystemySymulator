@@ -31,12 +31,9 @@
         <Label Content="Max&#xD;&#xA;Random&#xD;&#xA;" HorizontalAlignment="Left" Height="42" Margin="563,210,0,0" VerticalAlignment="Top" Width="70"/>
             </Grid>
         </TabItem>
-        <TabItem Header="HDDsim">
+        
             
-        </TabItem>
-        <TabItem Header="RNG settings">
-            
-        </TabItem>
+        
     </TabControl>
     
 </Window>

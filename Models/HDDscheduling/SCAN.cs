@@ -46,15 +46,7 @@ namespace Symulator1.Models.HDDscheduling
                         Right = true;
                     }
                 }
-                var temp = this.List.FindAll((e) =>
-                {
-                    return e.Cylinder == this.HeadLocation;
-                });
-                foreach (var item in temp)
-                {
-                    queue.Add(item);
-                }
-                temp = queue.FindAll((e) => e.Cylinder == this.HeadLocation);
+                var temp = queue.FindAll((e) => e.Cylinder == this.HeadLocation);
                 foreach (var item in temp)
                 {
                     queue.Remove(item);

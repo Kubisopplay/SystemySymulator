@@ -85,6 +85,9 @@
     </ApplicationDefinition>
     <Compile Include="HddController.cs" />
     <Compile Include="Models\Comparators\HddEntryComparator.cs" />
+    <Compile Include="Models\HDDscheduling\FDSCAN.cs" />
+    <Compile Include="Models\HDDscheduling\EDF.cs" />
+    <Compile Include="Models\HDDscheduling\CSCAN.cs" />
     <Compile Include="Models\HDDscheduling\SCAN.cs" />
     <Compile Include="Models\HDDscheduling\SSTF.cs" />
     <Compile Include="Models\HDDscheduling\FCFS.cs" />

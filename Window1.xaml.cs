@@ -1,6 +1,7 @@
 ﻿using Symulator1.Models.HDDscheduling;
 using Symulator1.Models.Helper;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,9 +30,11 @@ namespace Symulator1
 
             rng_entry.InitSliders();
             rng_cylinder.InitSliders();
+            deadline.InitSliders();
             Dictionary<string, RngControl> temp = new Dictionary<string, RngControl>();
             temp.Add("entry", rng_entry);
             temp.Add("cylinder", rng_cylinder);
+            temp.Add("deadline", deadline);
             controller = new HddController(temp,int.Parse(process_amount.Text));
 
         }
@@ -61,9 +64,42 @@ namespace Symulator1
                 new HddAlg("Empty"),
                 new FCFS("FCFS",maxlen ),
                 new SSTF("sstf",maxlen),
-                new SCAN("scan",maxlen)
+                new SCAN("scan",maxlen),
+                new CSCAN("CSCAN",maxlen),
+                new EDF("EDF",maxlen)
             };
             displayresults(controller.evaluateAlgorithm(algs));
+        }
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+             List<HDDResult> resultlistlist = new List<HDDResult>();
+            var maxlen = int.Parse(DiskWidth.Text);
+            HddAlg[] algs =
+                {
+                new HddAlg("Empty"),
+                new FCFS("FCFS",maxlen ),
+                new SSTF("sstf",maxlen),
+                new SCAN("scan",maxlen),
+                new CSCAN("CSCAN",maxlen),
+                new EDF("EDF",maxlen)
+            };
+            for (int i = 0; i < 10; i++)
+            {
+                controller.populateRandom(); 
+                resultlistlist.AddRange(controller.evaluateAlgorithm(algs));
+            }
+            List<HDDResult> results = new List<HDDResult>();
+            foreach (var item in algs)
+            {
+                var temp = new HDDResult(0, item.Name);
+                foreach(var i in resultlistlist.FindAll(ee => ee.Name == item.Name))
+                {
+                    temp.Value += i.Value;
+                }
+                temp.Value = temp.Value / 10;
+                results.Add(temp);
+            }
+            displayresults(results);
         }
         void DiskWidth_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -79,6 +115,14 @@ namespace Symulator1
 
             }
         }
+        }
+
+        private void realtime_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (controller != null)
+            {
+                controller.RealtimePercent = int.Parse(realtime.Text);
+            }
         }
     }
 }
